@@ -1,0 +1,12 @@
+{
+    "presets": [
+        [
+            "@babel/preset-env",
+            {
+                "targets": "> 0.25%, not dead" // 选择支持的浏览器范围
+            }
+        ],
+        "@babel/preset-typescript"
+    ],
+    "plugins": ["add-module-exports"]
+}
