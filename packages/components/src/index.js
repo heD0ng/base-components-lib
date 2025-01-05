@@ -1,7 +1,7 @@
 import Button from '@/components/Button';
-// import Button from './components/Button';
+import VirtualList from '@/components/VirtualList';
 
-const components = [Button];
+const components = [Button, VirtualList];
 
 const install = function (Vue) {
     components.forEach((component) => {
@@ -9,9 +9,10 @@ const install = function (Vue) {
     });
 };
 
-export { Button };
+export { Button, VirtualList };
 
 export default {
     install,
     Button,
+    VirtualList,
 };

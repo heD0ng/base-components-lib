@@ -1,12 +1,14 @@
 const path = require('path');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
     entry: {
         index: './src/index.js', // 全量导入
         // 按需导入，每个组件单独打包
         button: './src/components/Button/index.js',
+        'virtual-list': './src/components/VirtualList/index.js',
     },
     output: {
         filename: '[name].js',
@@ -18,9 +20,6 @@ module.exports = {
         clean: true,
     },
 
-    externals: {
-        vue: 'vue',
-    },
     resolve: {
         extensions: ['.ts', '.tsx', '.js', '.vue'], // 解析扩展名
         alias: {
@@ -53,11 +52,21 @@ module.exports = {
                     'sass-loader', // 将 Sass 转换为 CSS
                 ],
             },
+            {
+                test: /\.css$/,
+                use: [
+                    MiniCssExtractPlugin.loader, // 提取 CSS
+                    'css-loader',
+                ],
+            },
         ],
     },
     plugins: [
-        new VueLoaderPlugin(), // 需要 VueLoaderPlugin 来处理 .vue 文件
         new CleanWebpackPlugin(),
+        new VueLoaderPlugin(), // 需要 VueLoaderPlugin 来处理 .vue 文件
+        new MiniCssExtractPlugin({
+            filename: '[name].css', // 按照文件名来输出 CSS
+        }),
     ],
     externals: {
         vue: 'Vue', // 在组件库中不打包 Vue，而是作为外部依赖
